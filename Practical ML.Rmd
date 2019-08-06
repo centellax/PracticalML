@@ -31,34 +31,6 @@ dim(train)
 ```
 
 
-```{r}
-train <- mutate(train, NAcounter=rowSums(is.na(train))) 
-train <- train[which(train$NAcounter != 0),]
-train <- train[,-c(161)]
-
-# Removing near zero values
-nzvInTrain <- nearZeroVar(train)
-train <- train[,-nzvInTrain]
-
-# Remove participant identifiers in each row and timestamps
-train <- train[, -c(1:5)]
-
-## TESTING DATASET
-# Cleaning NA variables
-test <- mutate(test, NAcounter=rowSums(is.na(test))) 
-test <- test[which(test$NAcounter != 0),]
-test <- test[,-c(161)]
-
-# Removing near zero values
-nzvInTest <- nearZeroVar(test)
-test <- test[,-nzvInTest]
-
-# Remove participant identifiers in each row and timestamps
-test <- test[, -c(1:5)]
-```
-
-
-
 We can see the testing dataset contains 20 observations and 160 variables, and the training dataset contains 19622 observations and 160 variables. The last column "classe" will be the goal to be predicted.
 
 ## Data Preprocessing
