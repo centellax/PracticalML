@@ -408,29 +408,6 @@ dim(test)</code></pre>
 <pre><code>## [1]  20 160</code></pre>
 <pre class="r"><code>dim(train)</code></pre>
 <pre><code>## [1] 19622   160</code></pre>
-<pre class="r"><code>train &lt;- mutate(train, NAcounter=rowSums(is.na(train))) 
-train &lt;- train[which(train$NAcounter != 0),]
-train &lt;- train[,-c(161)]
-
-# Removing near zero values
-nzvInTrain &lt;- nearZeroVar(train)
-train &lt;- train[,-nzvInTrain]
-
-# Remove participant identifiers in each row and timestamps
-train &lt;- train[, -c(1:5)]
-
-## TESTING DATASET
-# Cleaning NA variables
-test &lt;- mutate(test, NAcounter=rowSums(is.na(test))) 
-test &lt;- test[which(test$NAcounter != 0),]
-test &lt;- test[,-c(161)]
-
-# Removing near zero values
-nzvInTest &lt;- nearZeroVar(test)
-test &lt;- test[,-nzvInTest]
-
-# Remove participant identifiers in each row and timestamps
-test &lt;- test[, -c(1:5)]</code></pre>
 <p>We can see the testing dataset contains 20 observations and 160 variables, and the training dataset contains 19622 observations and 160 variables. The last column “classe” will be the goal to be predicted.</p>
 </div>
 <div id="data-preprocessing" class="section level2">
@@ -460,39 +437,39 @@ cmRF</code></pre>
 ## 
 ##           Reference
 ## Prediction    A    B    C    D    E
-##          A 1640    1    0    0    0
-##          B   11 1100    3    1    0
-##          C    0    9  996    0    0
-##          D    0    0   24  919    1
-##          E    0    0    0    0 1058
+##          A 1673    0    0    0    1
+##          B    2 1136    1    0    0
+##          C    0    2 1024    0    0
+##          D    0    0    5  959    0
+##          E    0    0    0    0 1082
 ## 
 ## Overall Statistics
 ##                                           
-##                Accuracy : 0.9913          
-##                  95% CI : (0.9886, 0.9936)
-##     No Information Rate : 0.2865          
+##                Accuracy : 0.9981          
+##                  95% CI : (0.9967, 0.9991)
+##     No Information Rate : 0.2846          
 ##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
 ##                                           
-##                   Kappa : 0.989           
+##                   Kappa : 0.9976          
 ##                                           
 ##  Mcnemar&#39;s Test P-Value : NA              
 ## 
 ## Statistics by Class:
 ## 
 ##                      Class: A Class: B Class: C Class: D Class: E
-## Sensitivity            0.9933   0.9910   0.9736   0.9989   0.9991
-## Specificity            0.9998   0.9968   0.9981   0.9948   1.0000
-## Pos Pred Value         0.9994   0.9865   0.9910   0.9735   1.0000
-## Neg Pred Value         0.9973   0.9978   0.9943   0.9998   0.9998
-## Prevalence             0.2865   0.1926   0.1775   0.1596   0.1838
-## Detection Rate         0.2846   0.1909   0.1728   0.1595   0.1836
-## Detection Prevalence   0.2847   0.1935   0.1744   0.1638   0.1836
-## Balanced Accuracy      0.9965   0.9939   0.9859   0.9969   0.9995</code></pre>
+## Sensitivity            0.9988   0.9982   0.9942   1.0000   0.9991
+## Specificity            0.9998   0.9994   0.9996   0.9990   1.0000
+## Pos Pred Value         0.9994   0.9974   0.9981   0.9948   1.0000
+## Neg Pred Value         0.9995   0.9996   0.9988   1.0000   0.9998
+## Prevalence             0.2846   0.1934   0.1750   0.1630   0.1840
+## Detection Rate         0.2843   0.1930   0.1740   0.1630   0.1839
+## Detection Prevalence   0.2845   0.1935   0.1743   0.1638   0.1839
+## Balanced Accuracy      0.9993   0.9988   0.9969   0.9995   0.9995</code></pre>
 <pre class="r"><code>accuracy &lt;- postResample(pdRF, testing$classe)
 accuracy</code></pre>
 <pre><code>##  Accuracy     Kappa 
-## 0.9913240 0.9890221</code></pre>
-<p>So the esimated accuracy is 99.1323963%, and the estimated out-of-sample error is 0.8676037%</p>
+## 0.9981308 0.9976357</code></pre>
+<p>So the esimated accuracy is 99.8130841%, and the estimated out-of-sample error is 0.1869159%</p>
 </div>
 <div id="apply-to-the-20-test-cases" class="section level2">
 <h2>Apply to the 20 Test Cases</h2>
